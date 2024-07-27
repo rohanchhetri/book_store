@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Student Profile</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  </head>
+  <body>
+    <h1>Update Student Profile</h1>
+
+    <form id="editForm">
+      <table>
+        <tr>
+          <td>Student ID :</td>
+          <td><input type="text" id="sid" name="sid" required readonly /></td>
+        </tr>
+        <tr>
+          <td>Student Name :</td>
+          <td><input type="text" id="sname" name="sname" required /></td>
+        </tr>
+
+        <tr>
+          <td>GPA :</td>
+          <td>
+            <input type="text" id="gpa" name="gpa" step="0.01" required />
+          </td>
+        </tr>
+        <tr>
+          <td>Grade :</td>
+          <td><input type="text" id="grade" name="grade" required /></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input
+              type="button"
+              value="Edit & Save"
+              onclick="saveUpdatedData()"
+            />
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <script>
+      // Function to populate form fields with URL parameters
+      function populateFormFields() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sid = urlParams.get("sid");
+        const sname = urlParams.get("sname");
+        const grade = urlParams.get("grade");
+        const gpa = urlParams.get("gpa");
+
+        document.getElementById("sid").value = sid;
+        document.getElementById("sname").value = sname;
+        document.getElementById("grade").value = grade;
+        document.getElementById("gpa").value = gpa;
+      }
+
+      // Function to save updated data to local storage
+      function saveUpdatedData() {
+        const sid = document.getElementById("sid").value; // Get sid from input
+        const sname = document.getElementById("sname").value;
+        const grade = document.getElementById("grade").value;
+        const gpa = document.getElementById("gpa").value;
+
+        let students = localStorage.getItem("students");
+
+        if (students) {
+          students = JSON.parse(students);
+          // Find the student by sid and update fields
+          const studentIndex = students.findIndex(
+            (student) => student.sid === sid
+          );
+          if (studentIndex !== -1) {
+            students[studentIndex] = { sid, sname, grade, gpa }; // Update student data
+            localStorage.setItem("students", JSON.stringify(students)); // Save updated data to localStorage
+            window.location.href = "view.html"; // Redirect to view page or any other page
+          } else {
+            alert("Student not found in local storage.");
+          }
+        } else {
+          alert("No student records found in local storage.");
+        }
+      }
+
+      // Call the function to populate form fields on page load
+      window.onload = populateFormFields;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Records</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  </head>
+  <body>
+    <h2>Sample Project</h2>
+    <form
+      id="studentForm"
+      action="success.html"
+      method="get"
+      onsubmit="saveRecord(event)"
+    >
+      <table>
+        <tr>
+          <td>Student ID :</td>
+          <td><input type="text" id="sid" name="sid" required /></td>
+        </tr>
+        <tr>
+          <td>Student Name :</td>
+          <td><input type="text" id="sname" name="sname" required /></td>
+        </tr>
+        <tr>
+          <td>GPA :</td>
+          <td>
+            <input type="number" id="gpa" name="gpa" step="0.01" required />
+          </td>
+        </tr>
+        <tr>
+          <td>Grade :</td>
+          <td><input type="text" id="grade" name="grade" required /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="submit" value="Save Record" /></td>
+        </tr>
+      </table>
+    </form>
+    <br />
+    <a href="view.html">view Accounts</a>
+
+    <script>
+      function saveRecord(event) {
+        event.preventDefault();
+
+        const sid = document.getElementById("sid").value;
+        const sname = document.getElementById("sname").value;
+        const gpa = document.getElementById("gpa").value;
+        const grade = document.getElementById("grade").value;
+
+        const student = { sid, sname, gpa, grade };
+        let students = localStorage.getItem("students");
+
+        if (students) {
+          students = JSON.parse(students);
+        } else {
+          students = [];
+        }
+
+        students.push(student);
+        localStorage.setItem("students", JSON.stringify(students));
+
+        // Redirect to success page
+        window.location.href = "success.html";
+      }
+    </script>
+  </body>
+</html>
