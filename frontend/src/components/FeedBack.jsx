@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import img from "../assets/bg.jpg";
 // import required modules
 import { Pagination } from "swiper/modules";
 import { generateRating } from "../utils/rating";
@@ -38,21 +37,21 @@ const FeedBack = () => {
   const list = [
     {
       review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, illo dicta numquam qui fugiat itaque dolorem sit debitis odio eos. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis temporibus repellendus consequuntur quisquam ad recusandae, eveniet tempora odit culpa ea, natus dolore error iusto et iure ipsum veniam illo quas!",
-      img: "https://randomuser.me/api/portraits",
-      name: "ram",
+        "Lorem ipsum dolodae,  ea, natus dolore evenie num consectetur adipisicingor sit llo numquam qui fugia num elit. Consequatur fugiat placeat quasi earum atque sequi velit, cot tempora odit culpaerror iueveniet tempora odit culpasto et iure ipsum veniam illo quas!",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRelVK9xEj_QrOvVKAFfBypo3p-NoFVgU5U3w&s",
+      name: "John Doe",
     },
     {
       review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, illo dicta numquam qui fugiat itaque dolorem sit debitis odio eos. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis temporibus repellendus consequuntur quisquam ad recusandae, eveniet tempora odit culpa ea, natus dolore error iusto et iure ipsum veniam illo quas!",
-      img: "https://randomuser.me/api/portraits",
-      name: "rohan",
+        "Lorem ipsum dolor sit amet or sit llo numquam qui fugia num consectetur adipisicingor sit llo numquam qui fugia num elit. Consequatur fugiat placeat quasi earum atque sequi velit, consectetur voluptates autem cum?",
+      img: "https://cdn.britannica.com/47/188747-050-1D34E743/Bill-Gates-2011.jpg",
+      name: "Bill Gates",
     },
     {
       review:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, illo dicta numquam qui fugiat itaque dolorem sit debitis odio eos. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis temporibus repellendus consequuntur quisquam ad recusandae, eveniet tempora odit culpa ea, natus dolore error iusto et iure ipsum veniam illo quas!",
-      img: "https://randomuser.me/api/portraits",
-      name: "har",
+        "Lorem ipsum dolquam qui fugiadicta numquam qui fugiat itaque dolorem sit debitis odio eos. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis temporibus repellendus consequuntur quisquam ad recusandae, eveniet tempora odit culpa ea, natus dolore error iusto et iure ipsum veniam illo quas!",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtB6jk36Kr6mHEtbSH9D59I5y7n3xY9p5HRA&s",
+      name: "Elon Musks",
     },
   ];
 
@@ -68,22 +67,23 @@ const FeedBack = () => {
               clickable: true,
             }}
             modules={[Pagination]}
-            className="mySwiper"
+            className="mySwiper "
           >
             {" "}
             {list.map((item, index) => (
               <SwiperSlide key={item.name + index}>
                 <div className="flex justify-evenly">
-                  <div className="flex flex-col gap-2 items-start p-3 max-w-[420px] shadow-md bg-gray-200 rounded-lg">
+                  <div className="flex flex-col gap-4 items-starjt justify-center p-3 px-4 min-w-[25vw] max-w-[420px]  shadow-md bg-gray-200 rounded-lg mb-5">
                     {<StarRating rating={generateRating()} />}
-                    <p className="text-justify">{item.review}</p>
+                    <p className="text-justify line-clamp-5">{item.review}</p>
                     <img
-                      src={img}
+                      src={item.img}
                       alt={item.img}
-                      className="w-20 h-20 rounded-full object-fill"
+                      className="w-16 h-16 rounded-full"
                     />
-                    <p className="text-xl font-medium">{item.name}</p>
+                    <p className="text-lg font-medium">{item.name}</p>
                   </div>
+                  <p></p>
                 </div>
               </SwiperSlide>
             ))}{" "}

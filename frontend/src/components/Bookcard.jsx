@@ -1,14 +1,25 @@
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
 const BookCard = ({ book, onClick, isButtonDisplayed = false }) => {
+  const navigate = useNavigate();
+  const isLogged = localStorage.getItem("_token");
+
+  const handleBookOpen = () => {
+    if (isLogged) {
+      window.open(book.bookPDFURL, "_blank");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
-    // md:min-w-[300px] md:min-h-[350px]
-    <div className="flex justify-center ">
-      <div className=" bg-gray-200 flex flex-col items-center lmd:max-w-[20vw] md:min-w-[200px] w-[220px] overflow-hidden py-2 rounded-lg">
-        <div className="w-full  pb-1 px-4">
+    <div className="flex justify-center">
+      <div className="bg-gray-200 flex flex-col items-center lmd:max-w-[20vw] md:min-w-[200px] w-[220px] overflow-hidden py-2 rounded-lg">
+        <div className="w-full pb-1 px-4">
           <img
             src={book.imageURL}
             alt={book.bookTitle}
@@ -22,15 +33,12 @@ const BookCard = ({ book, onClick, isButtonDisplayed = false }) => {
               {book.bookTitle}
             </i>
           </p>
-          <div className="flex justify-center gap-2 w-full ">
+          <div className="flex justify-center gap-2 w-full">
             <p className="line-clamp-1 text-[0.9rem]">By: {book.authorName}</p>
-            <Link to={book.bookPDFURL} target="_blank">
-              <FontAwesomeIcon
-                icon={faBookOpen}
-                className="text-xl text-main"
-              />
-            </Link>{" "}
-          </div>{" "}
+            <button onClick={handleBookOpen} className="text-xl text-main">
+              <FontAwesomeIcon icon={faBookOpen} />
+            </button>
+          </div>
           <Link to={`/book/${book._id}`}>
             <button
               className={` ${

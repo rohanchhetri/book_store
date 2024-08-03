@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
 import StarRating from "../components/StarRating";
@@ -15,7 +15,15 @@ const BookOverview = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [toggleDesc, setToggleDesc] = useState(true);
-
+  const isLogged = localStorage.getItem("_token");
+  const navigate = useNavigate();
+  const handleBookOpen = () => {
+    if (isLogged) {
+      window.open(book.bookPDFURL, "_blank");
+    } else {
+      navigate("/login");
+    }
+  };
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -74,12 +82,13 @@ const BookOverview = () => {
             ></FontAwesomeIcon>
           </p>
 
-          <Link to={book.bookPDFURL} target="_blank">
-            {/* <Link to={"/read-book"}> */}
-            <button className="bg-main text-white px-3 py-2 rounded-md my-3">
-              Read Book
-            </button>
-          </Link>
+          {/* <Link to={"/read-book"}> */}
+          <button
+            onClick={handleBookOpen}
+            className="bg-main text-white px-3 py-2 rounded-md my-3"
+          >
+            Read Book
+          </button>
         </div>
       </div>
     </>

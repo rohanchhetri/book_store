@@ -48,6 +48,15 @@ const Search = () => {
   const handleShowBook = (id) => {
     navigate(`/book/${id}`);
   };
+  const isLogged = localStorage.getItem("_token");
+
+  const handleBookOpen = () => {
+    if (isLogged) {
+      window.open(books.bookPDFURL, "_blank");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <>
@@ -69,7 +78,7 @@ const Search = () => {
         </div>
         {/* Displaying Filtered Books */}
         {filteredBooks.length > 0 && (
-          <div className="flex flex-col justify-start py-2 rounded-lg w-[80%] max-w-[480px] max-h-[380px] absolute top-48 z-10 overflow-y-scroll bg-gray-50">
+          <div className="flex flex-col justify-start py-2 rounded-lg w-[80%] max-w-[480px] max-h-[380px] absolute top-40 z-10 overflow-y-scroll bg-gray-50">
             {filteredBooks.map((book) => (
               <div
                 key={book._id}
@@ -95,11 +104,12 @@ const Search = () => {
                     {book.authorName}
                   </p>
 
-                  <Link to={book.bookPDFURL} target="_blank">
-                    <button className="text-blue-500 hover:underline block mt-2">
-                      Read Book
-                    </button>
-                  </Link>
+                  <button
+                    onClick={handleBookOpen}
+                    className="text-blue-500 hover:underline block mt-2"
+                  >
+                    Read Book
+                  </button>
                 </div>
               </div>
             ))}

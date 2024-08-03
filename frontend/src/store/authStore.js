@@ -3,9 +3,12 @@ const admin = localStorage.getItem("_admin") === "true" ? true : false;
 const initialState = {
   isLogged: token !== null ? true : false,
   token: "",
-  admin: admin,
+  admin: true,
   username: "username",
   email: "example@gmail.com",
+  firstName: "John",
+  lastName: "Doe",
+  dob: "",
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -18,6 +21,9 @@ export const authReducer = (state = initialState, action) => {
         admin: action.payload.admin,
         username: action.payload.username,
         email: action.payload.email,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        dob: action.payload.dob,
       };
     case "LOGOUT":
       return {
@@ -27,6 +33,9 @@ export const authReducer = (state = initialState, action) => {
         admin: false,
         username: "username",
         email: "example@gmail.com",
+        firstName: "First",
+        lastName: "Last",
+        dob: "",
       };
     default:
       return state;

@@ -18,6 +18,9 @@ const SideBar = ({ show, handleClose }) => {
   const isLogged = useSelector((state) => state.authReducer.isLogged);
   const email = useSelector((state) => state.authReducer.email);
   const username = useSelector((state) => state.authReducer.username);
+  const firstName = useSelector((state) => state.authReducer.firstName);
+  const lastName = useSelector((state) => state.authReducer.lastName);
+  const initials = firstName.charAt(0) + lastName.charAt(0);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,7 +83,7 @@ const SideBar = ({ show, handleClose }) => {
                 className="flex justify-center  items-center rounded-md bg-main text-white w-12 h-12 "
                 // style={{ backgroundImage: `url(${bgImage})` }}
               >
-                RC
+                {initials}
               </div>
               <div className="m-0 text-sm flex text-main font-normal flex-col justify-center items-start">
                 <p className="text-lg font-semibold"> Hello, {username}</p>

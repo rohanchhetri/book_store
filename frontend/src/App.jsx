@@ -15,6 +15,7 @@ import ReadBook from "./pages/ReadBook";
 import Users from "./pages/Admin/Users";
 import UploadBook from "./pages/Admin/UploadBook";
 import Books from "./pages/Admin/Books";
+import Forgot from "./pages/Auth/Forgot";
 // import AuthWrapper from "./wrapper/authwrapper";
 const App = () => {
   const rotueItems = [
@@ -25,6 +26,11 @@ const App = () => {
     { name: "Contact", path: "/contact", element: <Contact /> },
     { name: "Login", path: "/login", element: <Login /> },
     { name: "Register", path: "/register", element: <Register /> },
+    {
+      name: "ForgotPassword",
+      path: "/forgot-password",
+      element: <Forgot />,
+    },
     { name: "Error404", path: "/*", element: <Error404 /> },
     { name: "Overview", path: "/book/:id", element: <BookOverview /> },
     { name: "ReadBook", path: "/read-book", element: <ReadBook /> },
@@ -32,31 +38,31 @@ const App = () => {
   const adminItems = [
     {
       name: "AdminDashboard",
-      path: "/admin/dashboard",
+      path: "/",
       element: <AdminDashboard />,
       requiredRole: "admin",
     },
     {
       name: "AdminDashboard",
-      path: "/admin/dashboard",
+      path: "/dashboard",
       element: <AdminDashboard />,
       requiredRole: "admin",
     },
     {
       name: "Upload Book",
-      path: "/admin/upload-book",
+      path: "/upload-book",
       element: <UploadBook />,
       requiredRole: "admin",
     },
     {
       name: "Books",
-      path: "/admin/manage-books",
+      path: "/manage-books",
       element: <Books />,
       requiredRole: "admin",
     },
     {
       name: "Users",
-      path: "/admin/manage-users",
+      path: "/manage-users",
       element: <Users />,
       requiredRole: "admin",
     },
@@ -86,7 +92,7 @@ const App = () => {
           return (
             <Route
               key={item.name + index}
-              path={item.path}
+              path={`admin${item.path}`}
               element={
                 <AuthWrapper requiredRole={item.requiredRole}>
                   {item.element}
