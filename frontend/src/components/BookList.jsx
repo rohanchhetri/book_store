@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PORT } from "../utils/port";
-import BookCard from "./Bookcard"; // Import the BookCard component
-// import { propTypes } from "react-bootstrap/esm/Image";
-// import { propTypes } from "react-bootstrap/esm/Image";
+import BookCard from "./Bookcard";
 import PropTypes from "prop-types";
 
 const BookList = ({ category }) => {
   BookList.propTypes = {
     category: PropTypes.string.isRequired,
   };
-  // category = category.description;
+
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(4);
-  // console.log(category);
+
   useEffect(() => {
     const handleResize = () => {
       const screenSize = window.innerWidth;
@@ -29,35 +27,45 @@ const BookList = ({ category }) => {
       }
     };
 
-    // Call handleResize initially to set the books per page based on initial screen size
     handleResize();
-
-    // Add event listener
     window.addEventListener("resize", handleResize);
 
-    // Remove event listener on cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []); // Empty dependency array means this useEffect runs once on mount and cleanup on unmount
+  }, []);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Reset page number to 1 when the category changes
+    setCurrentPage(1);
+
     fetch(`http://localhost:${PORT}/api/books`)
       .then((response) => response.json())
       .then((data) => {
-        if (category !== "all") {
-          data = data.filter(
-            (book) => book.category.toLowerCase() === category.toLowerCase()
-          );
-        }
-        setBooks(data);
+        console.log("Fetched Books Data:", data);
+        console.log("Current Category:", category);
 
+        const categoryToFilter = category || "all";
+
+        if (categoryToFilter !== "all") {
+          data = data.filter((book) => {
+            const bookCategory = book.category
+              ? book.category.toLowerCase()
+              : "";
+            return bookCategory === categoryToFilter.toLowerCase();
+          });
+        }
+
+        console.log("Filtered Books:", data);
+
+        setBooks(data);
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
+        console.error("Error fetching books:", error);
         setLoading(false);
       });
   }, [category]);
@@ -76,6 +84,7 @@ const BookList = ({ category }) => {
 
   if (loading) return "Loading...";
   if (error) return "Error!";
+  if (!books.length) return <p>No books found.</p>;
 
   return (
     <div className="flex flex-row flex-wrap justify-center gap-6 w-full ">
@@ -95,9 +104,7 @@ const BookList = ({ category }) => {
         >
           Prev
         </button>
-        <span className=" text-gray-800 font-bold py-2 px-4">
-          {currentPage}
-        </span>
+        <span className="text-gray-800 font-bold py-2 px-4">{currentPage}</span>
         <button
           onClick={() => paginate(currentPage + 1)}
           disabled={indexOfLastBook >= books.length}

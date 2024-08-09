@@ -20,7 +20,7 @@ const Header = () => {
         <li className="lmd:hidden list-none">
           <FontAwesomeIcon
             onClick={handleShow}
-            className="text-2xl"
+            className="text-2xl cursor-pointer hover:scale-125"
             icon={faBars}
           />
         </li>

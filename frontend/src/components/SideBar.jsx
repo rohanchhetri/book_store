@@ -4,8 +4,11 @@ import {
   faBookOpen,
   faDashboard,
   faHome,
+  faMessage,
   faStore,
   faUserCircle,
+  faUsers,
+  faUsersBetweenLines,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
@@ -40,15 +43,20 @@ const SideBar = ({ show, handleClose }) => {
     },
 
     {
-      name: "Books",
+      name: "Manage Books",
       path: "/admin/manage-books",
-      icon: faBookOpen,
+      icon: faBook,
     },
 
     {
-      name: "Users",
+      name: "Mange Users",
       path: "/admin/manage-users",
-      icon: faUserCircle,
+      icon: faUsers,
+    },
+    {
+      name: "Messages",
+      path: "/admin/messages",
+      icon: faMessage,
     },
   ];
   const userSideBar = [
@@ -60,12 +68,12 @@ const SideBar = ({ show, handleClose }) => {
     {
       name: "Dashboard",
       path: "/user/dashboard",
-      icon: faDashboard,
+      icon: faUserCircle,
     },
     {
-      name: "Shop",
+      name: "Books",
       path: "/shop",
-      icon: faStore,
+      icon: faBookOpen,
     },
     {
       name: "Categories",
@@ -105,7 +113,10 @@ const SideBar = ({ show, handleClose }) => {
                       <Link to={item.path} key={item.name + index}>
                         <div className="flex items-center gap-4">
                           <FontAwesomeIcon icon={item.icon}></FontAwesomeIcon>{" "}
-                          <li className="list-none"> {item.name}</li>
+                          <li className="list-none hover:text-main">
+                            {" "}
+                            {item.name}
+                          </li>
                         </div>
                       </Link>
                     ))}
@@ -116,7 +127,10 @@ const SideBar = ({ show, handleClose }) => {
                       <Link to={item.path} key={item.name + index}>
                         <div className="flex items-center gap-4">
                           <FontAwesomeIcon icon={item.icon}></FontAwesomeIcon>{" "}
-                          <li className="list-none"> {item.name}</li>
+                          <li className="list-none hover:text-main">
+                            {" "}
+                            {item.name}
+                          </li>
                         </div>
                       </Link>
                     ))}
@@ -127,13 +141,16 @@ const SideBar = ({ show, handleClose }) => {
             <div className="flex items-center cursor-pointer justify-between ">
               {isLogged ? (
                 <>
-                  <p onClick={handleLogout} className="text-xl">
+                  <p
+                    onClick={handleLogout}
+                    className="text-xl bg-main text-white px-2 py-1 rounded-lg"
+                  >
                     Logout
                   </p>
                   <FontAwesomeIcon
                     onClick={handleLogout}
                     icon={faArrowRightFromBracket}
-                    className="text-xl"
+                    className="text-xl text-main"
                   ></FontAwesomeIcon>
                 </>
               ) : (

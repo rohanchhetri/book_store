@@ -1,6 +1,6 @@
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Shop from "./pages/Shop";
+import BookPage from "./pages/BookPage";
 import Home from "./pages/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Blog from "./pages/Blog";
@@ -16,11 +16,12 @@ import Users from "./pages/Admin/Users";
 import UploadBook from "./pages/Admin/UploadBook";
 import Books from "./pages/Admin/Books";
 import Forgot from "./pages/Auth/Forgot";
+import Messages from "./pages/Admin/Messages";
 // import AuthWrapper from "./wrapper/authwrapper";
 const App = () => {
   const rotueItems = [
     { name: "Home", path: "/", element: <Home /> },
-    { name: "Shop", path: "/shop", element: <Shop /> },
+    { name: "Shop", path: "/shop", element: <BookPage /> },
     { name: "About", path: "/about", element: <About /> },
     { name: "Blog", path: "/blog", element: <Blog /> },
     { name: "Contact", path: "/contact", element: <Contact /> },
@@ -64,6 +65,12 @@ const App = () => {
       name: "Users",
       path: "/manage-users",
       element: <Users />,
+      requiredRole: "admin",
+    },
+    {
+      name: "Messages",
+      path: "/messages",
+      element: <Messages />,
       requiredRole: "admin",
     },
   ];

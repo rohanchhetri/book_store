@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PORT } from "../utils/port";
 
 const Search = () => {
@@ -23,38 +23,40 @@ const Search = () => {
     fetchBooks();
   }, []);
 
-  const handleSearch = (event, buttonClicked = false) => {
-    const searchTermValue = event
-      ? event.target.value.toLowerCase()
-      : searchTerm.toLowerCase();
-    setSearchTerm(searchTermValue);
-
-    if (searchTermValue === "") {
+  useEffect(() => {
+    // Filter books based on search term
+    if (searchTerm === "") {
       setFilteredBooks([]); // Clear filtered books if search term is empty
     } else {
-      // Filter books based on title similarity
       const filtered = books.filter((book) =>
-        book.bookTitle.toLowerCase().includes(searchTermValue)
+        book.bookTitle?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredBooks(filtered);
-
-      // If search button is clicked, navigate to the first book's overview page
-      if (buttonClicked && filtered.length > 0) {
-        navigate(`/book/${filtered[0]._id}`);
-      }
     }
+  }, [searchTerm, books]);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const handleShowBook = (id) => {
     navigate(`/book/${id}`);
   };
+
   const isLogged = localStorage.getItem("_token");
 
-  const handleBookOpen = () => {
+  const handleBookOpen = (bookPDFURL) => {
     if (isLogged) {
-      window.open(books.bookPDFURL, "_blank");
+      window.open(bookPDFURL, "_blank");
     } else {
       navigate("/login");
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (filteredBooks.length > 0) {
+      const firstBookId = filteredBooks[0]._id;
+      navigate(`/book/${firstBookId}`);
     }
   };
 
@@ -67,11 +69,11 @@ const Search = () => {
             placeholder="Enter Book Name"
             className="rounded-md rounded-ee-none rounded-se-none border-1 border-black outline-none p-1 text-black w-[50%] max-w-[400px]"
             value={searchTerm}
-            onChange={(e) => handleSearch(e)}
+            onChange={handleSearch}
           />
           <button
-            className="bg-main p-2 rounded-md rounded-ss-none rounded-es-none text-white"
-            onClick={() => handleSearch(null, true)} // Pass true to indicate search button click
+            onClick={handleSearchClick}
+            className="bg-main text-white rounded-se-lg rounded-ee-lg px-2"
           >
             Search
           </button>
@@ -105,7 +107,7 @@ const Search = () => {
                   </p>
 
                   <button
-                    onClick={handleBookOpen}
+                    onClick={() => handleBookOpen(book.bookPDFURL)}
                     className="text-blue-500 hover:underline block mt-2"
                   >
                     Read Book

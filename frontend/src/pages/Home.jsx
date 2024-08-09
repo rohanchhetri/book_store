@@ -157,7 +157,12 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <FeedBack />
+
+      <FeedBack
+        element={
+          <h1 className="text-3xl text-center font-semibold py-5">Our Users</h1>
+        }
+      />
       <Footer />
     </>
   );

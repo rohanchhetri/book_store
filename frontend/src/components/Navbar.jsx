@@ -1,8 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import UserIcon from "./UserIcon";
 
 const Navbar = (props) => {
@@ -17,7 +15,7 @@ const Navbar = (props) => {
   //   localStorage.removeItem("_admin");
   //   dispatch({ type: "LOGOUT" });
   // };
-  const loggedIconStyle = "text-2xl cursor-pointer ml-4";
+  const loggedIconStyle = "text-2xl cursor-pointer ml-4 hover:scale-125";
   const btnStyle = "bg-white text-main px-3 py-1 rounded-lg";
   return (
     <nav>
@@ -26,7 +24,9 @@ const Navbar = (props) => {
           {NavBarItems.map((item, index) => (
             <li key={item.name + index} className="mr-6 hover:text-gray-300">
               <NavLink
-                className={({ isActive }) => isActive && "text-yellow-500"}
+                className={({ isActive }) =>
+                  isActive ? "text-yellow-500" : "text-white"
+                }
                 to={item.path}
               >
                 {item.name}

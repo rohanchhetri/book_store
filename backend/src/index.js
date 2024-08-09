@@ -26,12 +26,17 @@ async function run() {
     const db = client.db("BookCollection");
     const booksCollection = db.collection("books");
     const usersCollection = db.collection("users");
+    const messagesCollection = db.collection("messages");
 
     const bookRoutes = require("./routes/bookRoutes")(booksCollection);
     const userRoutes = require("./routes/userRoutes")(usersCollection);
+    const messagesRoutes = require("./routes/messagesRoutes")(
+      messagesCollection
+    );
 
     app.use("/api/books", bookRoutes);
     app.use("/api/users", userRoutes);
+    app.use("/api/messages", messagesRoutes);
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);

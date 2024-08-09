@@ -1,26 +1,59 @@
 import { useState } from "react";
+import { PORT } from "../utils/port";
 
 const ContactForm = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
+    status: "Pending", // Add status to form state
   });
 
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
-    if (!form.name || !form.email || !form.message) {
-      setError(true);
+  const isValidEmail = (email) => {
+    // Simple email validation regex
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleSubmit = async () => {
+    const { name, email, message, status } = form;
+
+    if (!name || !email || !message) {
+      setError("Please fill all the fields.");
+    } else if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
     } else {
-      setError(false);
-      setSubmitted(true);
-      // Here you can handle form submission
+      setError("");
+      try {
+        const response = await fetch(`http://localhost:${PORT}/api/messages`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, message, status }), // Include status in request body
+        });
+
+        if (response.ok) {
+          setSubmitted(true);
+          // Clear form fields after successful submission
+          setForm({
+            name: "",
+            email: "",
+            message: "",
+            status: "Pending", // Reset status after submission
+          });
+        } else {
+          console.error("Failed to submit message");
+        }
+      } catch (error) {
+        console.error("Error submitting message:", error);
+      }
     }
   };
 
@@ -44,7 +77,9 @@ const ContactForm = () => {
         </div>
       ) : (
         <div className="min-w-[40vw] max-w-[500px] bg-white shadow-md p-6 my-5 rounded-md">
-          <h1 className="text-2xl font-semibold text-center">Contact Us</h1>
+          <h1 className="text-2xl font-semibold text-center">
+            Leave us message
+          </h1>
           <input
             type="text"
             name="name"
@@ -75,9 +110,7 @@ const ContactForm = () => {
           >
             Submit
           </button>
-          {error && (
-            <p className="text-red-500 mt-2">Please fill all the fields.</p>
-          )}
+          {error && <p className="text-red-500 mt-2">{error}</p>}
         </div>
       )}
     </div>

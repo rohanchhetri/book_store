@@ -2,8 +2,8 @@ const token = localStorage.getItem("_token") ?? null;
 const admin = localStorage.getItem("_admin") === "true" ? true : false;
 const initialState = {
   isLogged: token !== null ? true : false,
-  token: "",
-  admin: true,
+  token: token,
+  admin: admin,
   username: "username",
   email: "example@gmail.com",
   firstName: "John",

@@ -3,48 +3,32 @@ import BookList from "../components/BookList";
 import Header from "../components/Header";
 import Search from "../components/Search";
 import Footer from "../components/Footer";
-// import PopupView from "../components/PopUpView";
 
-const Shop = () => {
+const BookPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  useEffect(() => {
-    (document.title = "AthleticHub | Shop"), [];
-  });
-  const categories = [
-    {
-      name: "Default",
-      description: "all",
-    },
-    {
-      name: "Romance",
-      description: "romance",
-    },
-    {
-      name: "Fiction",
-      description: "fiction",
-    },
 
-    {
-      name: "Horror",
-      description: "horror",
-    },
-    {
-      name: "Fantasy",
-      description: "fantasy",
-    },
+  useEffect(() => {
+    document.title = "AthleticHub | Shop";
+  }, []);
+
+  const categories = [
+    { name: "Default", description: "all" },
+    { name: "Romance", description: "romance" },
+    { name: "Fiction", description: "fiction" },
+    { name: "Horror", description: "horror" },
+    { name: "Fantasy", description: "fantasy" },
   ];
-  // console.log(categories);
+
   const handleClick = (category) => {
     setSelectedCategory(category);
-    // alert("Category Clicked" + category);
+    console.log("Selected Category:", category);
   };
+
   return (
     <>
       <Header />
       <Search />
       <div className="flex w-full flex-col lmd:flex-row items-center lmd:items-start gap-4 py-5 px-4 justify-start">
-        {/* categories section */}
-
         <div className="h-full py-4 w-full max-w-[320px] lmd:max-w-[280px] lmd:min-w-[15%] flex flex-col justify-around items-center lmd:items-center text-black rounded-lg">
           <h1 className="text-xl pb-4">Categories</h1>
           <div className="flex flex-col w-full flex-wrap gap-y-2 items-center lmd:items-center justify-center">
@@ -66,9 +50,8 @@ const Shop = () => {
         <BookList category={selectedCategory} />
       </div>
       <Footer />
-      {/* <PopupView /> */}
     </>
   );
 };
 
-export default Shop;
+export default BookPage;

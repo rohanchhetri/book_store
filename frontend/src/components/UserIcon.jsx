@@ -1,18 +1,24 @@
 import {
+  faBook,
+  faBookAtlas,
   faBookOpen,
+  faBookReader,
+  faDashboard,
   faHome,
+  faMessage,
   faRightFromBracket,
   faUser,
   faUserCircle,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { PropTypes } from "prop-types";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 function UserIcon({ loggedIconStyle }) {
-  let isAdmin = localStorage.getItem("_admin");
+  let isAdmin = localStorage.getItem("_admin") === "true" ? true : false;
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(!show);
   const dispatch = useDispatch();
@@ -21,14 +27,22 @@ function UserIcon({ loggedIconStyle }) {
     {
       name: "Dashboard",
       path: "/admin/dashboard",
+      icon: faDashboard,
     },
     {
       name: "Manage Books",
       path: "/admin/manage-books",
+      icon: faBook,
     },
     {
       name: "Users Details",
       path: "/admin/manage-users",
+      icon: faUsers,
+    },
+    {
+      name: "Messages",
+      path: "/admin/messages",
+      icon: faMessage,
     },
   ];
   const userLinks = [
@@ -50,7 +64,7 @@ function UserIcon({ loggedIconStyle }) {
       window.location.reload();
     }
   };
-  const popupStyle = `hover:underline text-main hover:text-black flex items-center gap-3`;
+  const popupStyle = `hover:underline text-main hover:text-black flex items-center px-2 gap-3`;
   // alert(isAdmin);
   return (
     <>
@@ -70,6 +84,10 @@ function UserIcon({ loggedIconStyle }) {
           {isAdmin
             ? adminLinks.map((link, index) => (
                 <Link key={index} to={link.path} className={popupStyle}>
+                  <FontAwesomeIcon
+                    icon={link.icon}
+                    className="text-black"
+                  ></FontAwesomeIcon>{" "}
                   {link.name}
                 </Link>
               ))
@@ -96,7 +114,7 @@ function UserIcon({ loggedIconStyle }) {
   );
 }
 UserIcon.propTypes = {
-  loggedIconStyle: propTypes.string,
+  loggedIconStyle: PropTypes.string,
 };
 
 export default UserIcon;

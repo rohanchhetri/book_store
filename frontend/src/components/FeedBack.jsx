@@ -8,7 +8,7 @@ import { Pagination } from "swiper/modules";
 import { generateRating } from "../utils/rating";
 import StarRating from "./StarRating";
 import { useEffect, useState } from "react";
-const FeedBack = () => {
+const FeedBack = ({ element }) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -58,7 +58,8 @@ const FeedBack = () => {
   return (
     <>
       <div className="w-full">
-        <h1 className="text-3xl text-center font-semibold py-5">Our Users</h1>
+        {element}
+        {/* <h1 className="text-3xl text-center font-semibold py-5"></h1> */}
         <div>
           <Swiper
             slidesPerView={getSlidesPerView()}
