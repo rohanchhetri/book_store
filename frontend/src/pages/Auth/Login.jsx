@@ -10,6 +10,7 @@ const Login = () => {
   const [identifier, setIdentifier] = useState(""); // Can be email or username
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [stayLoggedIn, setStayLoggedIn] = useState(false); // New state for the checkbox
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -33,8 +34,14 @@ const Login = () => {
         const email = user.email;
         const username = user.username;
         const dob = user.dateOfBirth;
-        localStorage.setItem("_token", token);
-        localStorage.setItem("_admin", admin);
+
+        if (stayLoggedIn) {
+          localStorage.setItem("_token", token);
+          localStorage.setItem("_admin", admin);
+        } else {
+          sessionStorage.setItem("_token", token);
+          sessionStorage.setItem("_admin", admin);
+        }
 
         // Dispatch action to update isLogged in Redux store
         dispatch({
@@ -70,7 +77,7 @@ const Login = () => {
     <>
       <Header />
       <div className="flex h-[100vh] flex-1 justify-center items-center py-12 lg:px-8">
-        <div className="w-[70vw] max-w-[500px] rounded-md bg-gray-200 px-6 pb-3 ">
+        <div className="w-[70vw] max-w-[500px] rounded-md bg-gray-200 px-6 pb-3">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             {error && (
               <Alert key="danger" variant="danger">
@@ -135,6 +142,23 @@ const Login = () => {
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+              </div>
+
+              <div className="flex items-center">
+                <input
+                  id="stayLoggedIn"
+                  name="stayLoggedIn"
+                  type="checkbox"
+                  checked={stayLoggedIn}
+                  onChange={() => setStayLoggedIn(!stayLoggedIn)}
+                  className="h-4 w-4 text-main focus:ring-indigo-600 border-gray-300 rounded"
+                />
+                <label
+                  htmlFor="stayLoggedIn"
+                  className="ml-2 block text-sm leading-6 text-gray-900"
+                >
+                  Stay logged in
+                </label>
               </div>
 
               <div>

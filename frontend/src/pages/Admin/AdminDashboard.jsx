@@ -3,8 +3,6 @@ import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { PORT } from "../../utils/port";
-import StarRating from "../../components/StarRating";
-import { generateRating } from "../../utils/rating";
 import FeedBack from "../../components/FeedBack";
 import CountUp from "react-countup";
 
@@ -12,7 +10,7 @@ const AdminDashboard = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    document.title = "Admin Dashboard";
+    document.title = "BookHub | Admin Dashboard";
 
     // Fetch messages
     const fetchMessages = async () => {

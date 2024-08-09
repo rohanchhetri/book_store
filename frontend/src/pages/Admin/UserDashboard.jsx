@@ -3,6 +3,9 @@ import axios from "axios";
 import Header from "../../components/Header";
 
 const Dashboard = () => {
+  useEffect(() => {
+    (document.title = "BookHub | Dashboard"), [];
+  });
   const [userData, setUserData] = useState({
     firstName: "",
     lastName: "",

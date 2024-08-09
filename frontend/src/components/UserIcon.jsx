@@ -1,8 +1,6 @@
 import {
   faBook,
-  faBookAtlas,
   faBookOpen,
-  faBookReader,
   faDashboard,
   faHome,
   faMessage,

@@ -13,7 +13,7 @@ import UserDashboard from "./pages/Admin/UserDashboard";
 import BookOverview from "./pages/BookOverview";
 import ReadBook from "./pages/ReadBook";
 import Users from "./pages/Admin/Users";
-import UploadBook from "./pages/Admin/UploadBook";
+import UploadBook from "./components/UploadBook";
 import Books from "./pages/Admin/Books";
 import Forgot from "./pages/Auth/Forgot";
 import Messages from "./pages/Admin/Messages";

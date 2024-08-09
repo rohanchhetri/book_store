@@ -11,6 +11,9 @@ import {
 import Header from "../../components/Header";
 
 const Users = () => {
+  useEffect(() => {
+    (document.title = "BookHub | Manage-Users"), [];
+  });
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);

@@ -9,6 +9,9 @@ const statusColors = {
 };
 
 const Messages = () => {
+  useEffect(() => {
+    (document.title = "BookHub | User Messages"), [];
+  });
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

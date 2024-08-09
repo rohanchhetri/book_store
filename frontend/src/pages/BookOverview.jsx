@@ -12,6 +12,9 @@ import {
 import { PORT } from "../utils/port";
 
 const BookOverview = () => {
+  useEffect(() => {
+    (document.title = "BookHub | Overview"), [];
+  });
   const { id } = useParams();
   const [book, setBook] = useState(null);
   const [toggleDesc, setToggleDesc] = useState(true);

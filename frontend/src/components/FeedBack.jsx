@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import PropTypes from "prop-types";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,6 +9,9 @@ import { generateRating } from "../utils/rating";
 import StarRating from "./StarRating";
 import { useEffect, useState } from "react";
 const FeedBack = ({ element }) => {
+  FeedBack.propTypes = {
+    element: PropTypes.element,
+  };
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Modal, Form, Table } from "react-bootstrap";
 import Header from "../../components/Header";
-import UploadBook from "./UploadBook";
+import UploadBook from "../../components/UploadBook";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
@@ -10,6 +10,8 @@ const Books = () => {
   const [currentBook, setCurrentBook] = useState(null);
 
   useEffect(() => {
+    document.title = "BookHub | Manage-Books";
+
     fetchBooks();
   }, []);
 

@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import { useEffect } from "react";
 
 const ReadBook = () => {
+  useEffect(() => {
+    (document.title = "BookHub | ReadBook"), [];
+  });
   return (
     <>
       <Header />

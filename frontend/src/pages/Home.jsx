@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
-// import BookList from "../components/BookList";
-// import Slider from "../components/Carousel";
 import Search from "../components/Search";
 import BookCardSwiper from "../components/BookCardSwiper";
 // import fetchBooks from "../utils/fetchBooks";
@@ -22,7 +20,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "AthleticHub | Home";
+    document.title = "BookHub | Home";
     // console.log(renderCount.current);
     const loadBooks = async () => {
       try {
@@ -44,30 +42,6 @@ const Home = () => {
   const handleButtonClick = () => {
     isLogged ? navigate("/shop") : navigate("/register");
   };
-  // console.log(books);
-
-  // let books = [];
-  // Function to shuffle an array
-
-  // let featuredBooks = [];
-  // let uniqueIndices = new Set();
-  // while (uniqueIndices.size < 10) {
-  //   const randomIndex = Math.floor(Math.random() * books.length);
-  //   if (!uniqueIndices.has(randomIndex)) {
-  //     uniqueIndices.add(randomIndex);
-  //     //   continue;
-  //   }
-  // }
-  // if (books.length > 0) {
-  //   featuredBooks = [...uniqueIndices].map((index) => books[index]);
-  // }
-  // featuredBooks = [...uniqueIndices].map((index) => books[index]);
-  // console.log(randomIndex);
-  // if (!uniqueIndices.has(randomIndex)) {
-  //   uniqueIndices.add(randomIndex);
-  //    }
-  // }
-  // console.log(uniqueIndices);
 
   return (
     <>

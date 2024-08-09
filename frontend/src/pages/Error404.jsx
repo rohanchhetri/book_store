@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Error404 = () => {
   useEffect(() => {
-    (document.title = "AthleticHub | Error404"), [];
+    (document.title = "BookHub | Error404"), [];
   });
   return (
     <>

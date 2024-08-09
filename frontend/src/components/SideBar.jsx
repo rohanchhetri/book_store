@@ -2,13 +2,10 @@ import {
   faArrowRightFromBracket,
   faBook,
   faBookOpen,
-  faDashboard,
   faHome,
   faMessage,
-  faStore,
   faUserCircle,
   faUsers,
-  faUsersBetweenLines,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";

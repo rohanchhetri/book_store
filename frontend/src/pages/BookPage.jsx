@@ -8,7 +8,7 @@ const BookPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   useEffect(() => {
-    document.title = "AthleticHub | Shop";
+    document.title = "BookHub | Books";
   }, []);
 
   const categories = [
