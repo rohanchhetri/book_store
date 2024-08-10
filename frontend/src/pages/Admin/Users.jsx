@@ -7,17 +7,20 @@ import {
   Table,
   DropdownButton,
   Dropdown,
+  Alert,
 } from "react-bootstrap";
 import Header from "../../components/Header";
 
 const Users = () => {
   useEffect(() => {
-    (document.title = "BookHub | Manage-Users"), [];
-  });
+    document.title = "BookHub | Manage Users";
+  }, []);
+
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [notification, setNotification] = useState(""); // State for notifications
 
   useEffect(() => {
     fetchUsers();
@@ -42,9 +45,15 @@ const Users = () => {
     try {
       await axios.delete(`http://localhost:8888/api/users/${id}`);
       setUsers(users.filter((user) => user._id !== id));
-      window.location.reload();
+      setNotification("User deleted successfully.");
+      setTimeout(() => {
+        setNotification("");
+        window.location.reload();
+      }, 3000); // Clear notification after 3 seconds
     } catch (error) {
       console.error("Error deleting user:", error);
+      setNotification("Error deleting user.");
+      setTimeout(() => setNotification(""), 3000); // Clear notification after 3 seconds
     }
   };
 
@@ -52,15 +61,22 @@ const Users = () => {
     e.preventDefault();
     try {
       const { _id, ...updatePayload } = currentUser;
-      console.log(_id);
       await axios.put(
         `http://localhost:8888/api/users/${currentUser._id}`,
         updatePayload
       );
+      console.log(_id);
       setShowEditModal(false);
       fetchUsers();
+      setNotification("User updated successfully.");
+      setTimeout(() => {
+        setNotification("");
+        fetchUsers();
+      }, 3000); // Clear notification after 3 seconds
     } catch (error) {
       console.error("Error updating user:", error);
+      setNotification("Error updating user.");
+      setTimeout(() => setNotification(""), 3000); // Clear notification after 3 seconds
     }
   };
 
@@ -73,21 +89,27 @@ const Users = () => {
     const updatedUser = users.find((user) => user._id === userId);
     if (updatedUser) {
       const { _id, ...userWithoutId } = updatedUser; // Exclude _id from the update payload
-
-      console.log(_id);
       try {
         await axios.put(`http://localhost:8888/api/users/${userId}`, {
           ...userWithoutId,
           admin: newRole,
         });
+        console.log(_id);
         // Update user in local state
         setUsers(
           users.map((user) =>
             user._id === userId ? { ...user, admin: newRole } : user
           )
         );
+        setNotification("User role updated successfully.");
+        setTimeout(() => {
+          setNotification("");
+          window.location.reload();
+        }, 3000); // Clear notification after 3 seconds
       } catch (error) {
         console.error("Error updating role:", error);
+        setNotification("Error updating role.");
+        setTimeout(() => setNotification(""), 3000); // Clear notification after 3 seconds
       }
     }
   };
@@ -97,6 +119,11 @@ const Users = () => {
       <Header />
       <div className="container flex flex-col justify-center md:items-center md:m w-[100%] sm:text-xs md:text-sm lmd:text-base lg:text-lg xl:text-xl">
         <h1 className="text-3xl font-medium py-4">All Users</h1>
+        {notification && (
+          <Alert variant="info" className="mb-3">
+            {notification}
+          </Alert>
+        )}
         <div className="table-responsive">
           <Table striped bordered hover>
             <thead>
@@ -198,20 +225,6 @@ const Users = () => {
                     name="fullAddress"
                     value={currentUser.fullAddress}
                     onChange={handleInputChange}
-                  />
-                </Form.Group>
-                <Form.Group controlId="admin">
-                  <Form.Label>Admin</Form.Label>
-                  <Form.Check
-                    type="checkbox"
-                    name="admin"
-                    checked={currentUser.admin}
-                    onChange={(e) =>
-                      setCurrentUser({
-                        ...currentUser,
-                        admin: e.target.checked,
-                      })
-                    }
                   />
                 </Form.Group>
                 <Button className="bg-main mt-3" type="submit">

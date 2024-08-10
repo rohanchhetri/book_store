@@ -9,6 +9,7 @@ import StackCard from "../components/StackCard";
 import fetchBooks from "../utils/fetchBooks";
 import FeedBack from "../components/FeedBack";
 import Footer from "../components/Footer";
+import CountUp from "react-countup";
 // import StackCard from "../components/StackCard";
 
 // import Gym from "../assets/gym.jpg";
@@ -25,7 +26,7 @@ const Home = () => {
     const loadBooks = async () => {
       try {
         const response = await fetchBooks();
-        setBooks(response);
+        setBooks(response.slice(0, 10));
       } catch (error) {
         console.error("Error loading books:", error);
       }
@@ -34,7 +35,7 @@ const Home = () => {
     loadBooks();
   }, []);
   useEffect(() => {
-    console.log("Books State Updated:", books); // Log state updates
+    // console.log("Books State Updated:", books); // Log state updates
   }, [books]);
 
   const isLogged = useSelector((state) => state.authReducer.isLogged);
@@ -114,11 +115,17 @@ const Home = () => {
           </p>
           <div className="flex flex-col gap-3 md:flex-row md:gap-5 w-full justify-between pb-1">
             <div className="flex- flex-col">
-              <h1 className="text-2xl font-semibold">800+</h1>
+              <h1 className="text-2xl font-semibold">
+                {" "}
+                <CountUp end={200} duration={8} />+
+              </h1>
               <p>Books</p>
             </div>
             <div className="flex- flex-col">
-              <h1 className="text-2xl font-semibold">500+</h1>
+              <h1 className="text-2xl font-semibold">
+                {" "}
+                <CountUp end={2200} duration={7} />+
+              </h1>
               <p>Users</p>
             </div>
             <div className="flex- flex-col">

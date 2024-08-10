@@ -5,12 +5,15 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import Header from "../../components/Header";
 import { PORT } from "../../utils/port";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [identifier, setIdentifier] = useState(""); // Can be email or username
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [stayLoggedIn, setStayLoggedIn] = useState(false); // New state for the checkbox
+  const [stayLoggedIn, setStayLoggedIn] = useState(true);
+  const [showPassword, setShowPassword] = useState(false); // Added state for password visibility
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -42,7 +45,7 @@ const Login = () => {
           sessionStorage.setItem("_token", token);
           sessionStorage.setItem("_admin", admin);
         }
-
+        console.log(admin);
         // Dispatch action to update isLogged in Redux store
         dispatch({
           type: "LOGIN",
@@ -65,11 +68,11 @@ const Login = () => {
           nav("/");
         }
       } else {
-        setError(true);
+        setError("Invalid Username/Email or Password");
       }
     } catch (err) {
       console.error("Error fetching users:", err);
-      setError(true);
+      setError("Error fetching users");
     }
   };
 
@@ -81,7 +84,7 @@ const Login = () => {
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             {error && (
               <Alert key="danger" variant="danger">
-                Invalid Username/Email or Password
+                {error}
               </Alert>
             )}
 
@@ -130,17 +133,24 @@ const Login = () => {
                     </Link>
                   </div>
                 </div>
-                <div className="mt-2">
+                <div className="mt-2 relative">
                   <input
                     id="password"
                     name="password"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     autoComplete="current-password"
                     className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
                 </div>
               </div>
 

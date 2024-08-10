@@ -12,11 +12,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { PropTypes } from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function UserIcon({ loggedIconStyle }) {
-  let isAdmin = localStorage.getItem("_admin") === "true" ? true : false;
+  const isAdmin = useSelector((state) => state.authReducer.admin);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(!show);
   const dispatch = useDispatch();
@@ -58,6 +58,8 @@ function UserIcon({ loggedIconStyle }) {
     if (confirmLogout) {
       localStorage.removeItem("_token");
       localStorage.removeItem("_admin");
+      sessionStorage.removeItem("_token");
+      sessionStorage.removeItem("_admin");
       dispatch({ type: "LOGOUT" });
       window.location.reload();
     }

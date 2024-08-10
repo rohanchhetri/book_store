@@ -1,5 +1,9 @@
 const token = localStorage.getItem("_token") ?? null;
-const admin = localStorage.getItem("_admin") === "true" ? true : false;
+const admin =
+  localStorage.getItem("_admin") === "true" ||
+  sessionStorage.getItem("_admin") === "true"
+    ? true
+    : false;
 const initialState = {
   isLogged: token !== null ? true : false,
   token: token,

@@ -44,8 +44,8 @@ const BookList = ({ category }) => {
     fetch(`http://localhost:${PORT}/api/books`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched Books Data:", data);
-        console.log("Current Category:", category);
+        // console.log("Fetched Books Data:", data);
+        // console.log("Current Category:", category);
 
         const categoryToFilter = category || "all";
 
@@ -58,7 +58,7 @@ const BookList = ({ category }) => {
           });
         }
 
-        console.log("Filtered Books:", data);
+        // console.log("Filtered Books:", data);
 
         setBooks(data);
         setLoading(false);

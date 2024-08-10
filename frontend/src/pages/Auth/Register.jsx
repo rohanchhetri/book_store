@@ -15,11 +15,29 @@ const Register = () => {
   const [fullAddress, setFullAddress] = useState("");
   const [contact, setContact] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(""); // Added success state
+  const [success, setSuccess] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+
+  const validatePassword = (password) => {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    return hasUpperCase && hasNumber;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Password validation
+    if (!validatePassword(password)) {
+      setPasswordError(
+        "Password must contain at least one uppercase letter and one number."
+      );
+      return;
+    } else {
+      setPasswordError(""); // Clear password error message if validation passes
+    }
+
     try {
       const getResponse = await axios.get(`http://localhost:${PORT}/api/users`);
       const users = getResponse.data;
@@ -29,7 +47,7 @@ const Register = () => {
       );
       if (user) {
         setError("Username or email already exists.");
-        setSuccess(""); // Clear success message
+        setSuccess("");
         return;
       }
 
@@ -46,23 +64,23 @@ const Register = () => {
       });
 
       console.log("Registration successful:", response.data);
-      setSuccess("Registration successful! Please log in."); // Set success message
-      setError(""); // Clear error message
+      setSuccess("Registration successful! Please log in.");
+      setError("");
       setTimeout(() => {
         navigate("/login");
-      }, 2000); // Redirect after 2 seconds
+      }, 2000);
     } catch (err) {
       console.error("Registration error:", err);
       setError("Registration failed. Please try again.");
-      setSuccess(""); // Clear success message
+      setSuccess("");
     }
   };
 
   return (
     <>
       <Header />
-      <div className="flex h-full items-center justify-center bg-gray-100">
-        <div className="w-full mt-24 max-w-md p-8 bg-white rounded-lg shadow-md">
+      <div className="flex h-full items-center justify-center bg-white">
+        <div className="w-full mt-24 max-w-md p-8 bg-gray-100 rounded-lg shadow-md">
           <div className="text-center">
             {error && (
               <Alert key="danger" variant="danger">
@@ -72,6 +90,11 @@ const Register = () => {
             {success && (
               <Alert key="success" variant="success">
                 {success}
+              </Alert>
+            )}
+            {passwordError && (
+              <Alert key="warning" variant="warning">
+                {passwordError}
               </Alert>
             )}
             <h2 className="text-2xl font-bold text-gray-900">
